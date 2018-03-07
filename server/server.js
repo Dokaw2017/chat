@@ -12,10 +12,19 @@ var app = express();
 var server = http.createServer(app)
 var io = socketIO(server);
 
-io.on('connection', (socket) => {
+io.on('connection', function (socket) {
     console.log('New user connected');
 
-    socket.on('disconnect', () => {
+    socket.emit('newMessage', {
+        from: 'Alifu',
+        text: 'Lemelifu altenesachem?'
+    })
+
+    socket.on('createMessage', (newMessage) => {
+        console.log('createMessage', newMessage);
+    });
+
+    socket.on('disconnect', function () {
         console.log('Client disconnected');
     })
 });
